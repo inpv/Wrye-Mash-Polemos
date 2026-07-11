@@ -41,11 +41,14 @@
 # Modified by Polemos :) in 2,000,000 places, 2018~.
 
 
+import sys
 import locale
 import time, traceback
 from threading import Thread as Thread  # Polemos
 from subprocess import PIPE, check_call # Polemos
-from sfix import Popen  # Polemos
+from subprocess import Popen
+if sys.platform == 'win32':
+    from sfix import Popen  # Polemos: Windows-only CreateProcess unicode fix
 import io, ushlex, scandir  # Polemos
 from unimash import uniChk, encChk, _  # Polemos
 import array, cPickle, cStringIO, copy, math, os, re, shutil, string
