@@ -48,7 +48,12 @@ from types import *
 from zlib import crc32
 import io, stat, scandir, ushlex, thread, xxhash  # Polemos
 from subprocess import PIPE, check_call  # Polemos: KEEP => check_call <= !!
-from sfix import Popen  # Polemos
+
+if sys.platform == 'win32':
+    from sfix import Popen  # Polemos: Windows-only CreateProcess unicode fix
+else:
+    from subprocess import Popen
+
 import compat
 # Exceptions
 from merrors import mError as BoltError
