@@ -63,7 +63,12 @@ from plugins import tes3cmd
 from unimash import _  # Polemos
 from merrors import StateError as StateError, UncodedError as UncodedError
 from mosh import formatInteger, formatDate, ResetTempDir  # Polemos
-from sfix import Popen  # Polemos
+
+if sys.platform == 'win32':
+    from sfix import Popen  # Polemos: Windows-only CreateProcess unicode fix
+else:
+    from subprocess import Popen
+
 from unimash import n_path, uniChk, fChk, uniformatDate  # Polemos
 from merrors import MashError as MashError  # Polemos
 
