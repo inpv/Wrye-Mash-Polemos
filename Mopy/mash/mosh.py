@@ -46,9 +46,12 @@ import locale
 import time, traceback
 from threading import Thread as Thread  # Polemos
 from subprocess import PIPE, check_call # Polemos
-from subprocess import Popen
+
 if sys.platform == 'win32':
-    from sfix import Popen  # Polemos: Windows-only CreateProcess unicode fix
+    from sfix import Popen
+else:
+    from subprocess import Popen
+
 import io, ushlex, scandir  # Polemos
 from unimash import uniChk, encChk, _  # Polemos
 import array, cPickle, cStringIO, copy, math, os, re, shutil, string
