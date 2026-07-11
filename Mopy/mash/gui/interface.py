@@ -26,7 +26,7 @@
 # ===========================================================================================
 
 
-import wx, os, json
+import wx, wx.adv, os, json
 from ..unimash import _
 from .. import singletons
 
@@ -85,12 +85,12 @@ class ThemeEngine:
         with open(themePath, 'w') as themeFile: themeFile.writelines(themeData)
 
 
-class SysTray(wx.TaskBarIcon):
+class SysTray(wx.adv.TaskBarIcon):
     """Systray icon."""
 
     def __init__(self, mainFrame, mode):
         """Init."""
-        wx.TaskBarIcon.__init__(self)
+        wx.adv.TaskBarIcon.__init__(self)
         mainFrame.Hide()
         self.mainFrame = mainFrame
         self.openmw = mode
