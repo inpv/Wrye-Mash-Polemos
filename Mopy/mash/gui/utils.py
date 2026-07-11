@@ -38,7 +38,7 @@
 # ========================================================================================
 
 
-import os
+import os, sys
 import wx
 from .. import singletons
 from .. import conf
@@ -48,7 +48,12 @@ from ..unimash import _
 from .. import gui
 from . import dialog
 from subprocess import PIPE
-from ..sfix import Popen  # Polemos fix
+
+if sys.platform == 'win32':
+    from ..sfix import Popen  # Polemos: Windows-only CreateProcess unicode fix
+else:
+    from subprocess import Popen
+
 import ushlex  # Polemos addon
 
 
