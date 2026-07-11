@@ -38,9 +38,14 @@
 # ========================================================================================
 
 
-import os
+import os, sys
 import subprocess
-from ...sfix import Popen
+
+if sys.platform == 'win32':
+    from ...sfix import Popen  # Polemos: Windows-only CreateProcess unicode fix
+else:
+    from subprocess import Popen
+
 import threading
 import time
 import Queue as queue
