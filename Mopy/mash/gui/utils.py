@@ -39,7 +39,7 @@
 
 
 import os, sys
-import wx
+import wx, wx.adv
 from .. import singletons
 from .. import conf
 from .. import mosh
@@ -91,7 +91,7 @@ class UtilsPanel(gui.NotebookPanel):  # Polemos: changes and fixes.
         singletons.utilsList.arguments = self.gArguments
         singletons.utilsList.description = self.gDescription
         right.SetSizer(vSizer((self.gCommandLine,0,wx.GROW), (self.gArguments,0,wx.GROW), (self.gDescription,1,wx.GROW)))
-        wx.LayoutAlgorithm().LayoutWindow(self, right)
+        wx.adv.LayoutAlgorithm().LayoutWindow(self, right)
         # --Events
         self.Bind(wx.EVT_SIZE, self.OnSize)
 
