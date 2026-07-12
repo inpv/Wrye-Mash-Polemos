@@ -45,7 +45,7 @@ from datetime import date  # Polemos
 from subprocess import PIPE, check_call  # Polemos: KEEP "check_call" !!!
 from threading import Thread  # Polemos
 from types import *
-import scandir, wx, wx.html
+import scandir, wx, wx.html, wx.adv
 from wx.lib.mixins.listctrl import ListCtrlAutoWidthMixin
 import balt, bolt, conf, gui.dialog
 import gui.interface as interface  # Polemos
@@ -380,11 +380,11 @@ class SashTankPanel(gui.NotebookPanel):
         wMin, wMax = 80, self.GetSizeTuple()[0] - 80
         sashPos = max(wMin, min(wMax, event.GetDragRect().width))
         self.left.SetDefaultSize((sashPos, 10))
-        wx.LayoutAlgorithm().LayoutWindow(self, self.right)
+        wx.adv.LayoutAlgorithm().LayoutWindow(self, self.right)
         self.data.setParam('sashPos', sashPos)
 
     def OnSize(self, event=None):
-        wx.LayoutAlgorithm().LayoutWindow(self, self.right)
+        wx.adv.LayoutAlgorithm().LayoutWindow(self, self.right)
 
     def OnCloseWindow(self):
         """To be called when containing frame is closing. Use for saving data, scrollpos, etc."""
@@ -3129,7 +3129,7 @@ class InstallersPanel(SashTankPanel):  # Polemos: Refactored, changes, store/res
                 ), 1, wx.GROW|wx.TOP, 4),
                 (self.gCommentstxt, 0, wx.TOP, 4),
                 (self.gComments, 1, wx.GROW|wx.TOP, 4), ))
-            wx.LayoutAlgorithm().LayoutWindow(self, right)
+            wx.adv.LayoutAlgorithm().LayoutWindow(self, right)
             self.gComments.Disable()
         if True:  # Theming
             self.gPackage.SetBackgroundColour(self.GetBackgroundColour())
@@ -3728,7 +3728,7 @@ class ScreensPanel(gui.NotebookPanel):
         singletons.screensList.picture = balt.Picture(right, 1024, 768)
         #--Layout
         right.SetSizer(hSizer((singletons.screensList.picture, 1, wx.GROW)))
-        wx.LayoutAlgorithm().LayoutWindow(self, right)
+        wx.adv.LayoutAlgorithm().LayoutWindow(self, right)
         #--Event
         self.Bind(wx.EVT_SIZE, self.OnSize)
 
@@ -3742,12 +3742,12 @@ class ScreensPanel(gui.NotebookPanel):
         wMin,wMax = 80,self.GetSizeTuple()[0]-80
         sashPos = max(wMin,min(wMax,event.GetDragRect().width))
         self.left.SetDefaultSize((sashPos,10))
-        wx.LayoutAlgorithm().LayoutWindow(self, self.right)
+        wx.adv.LayoutAlgorithm().LayoutWindow(self, self.right)
         singletons.screensList.picture.Refresh()
         conf.settings['mash.screens.sashPos'] = sashPos
 
     def OnSize(self,event=None):
-        wx.LayoutAlgorithm().LayoutWindow(self, self.right)
+        wx.adv.LayoutAlgorithm().LayoutWindow(self, self.right)
 
     def OnShow(self):
         """Panel is shown. Update self.data."""
