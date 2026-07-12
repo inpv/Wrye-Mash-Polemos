@@ -3138,8 +3138,8 @@ class InstallersPanel(SashTankPanel):  # Polemos: Refactored, changes, store/res
         if True:  # Events
             self.Bind(wx.EVT_TIMER, self.onUpdate, self.instTimer)
             self.instTimer.Start(300)
-            self.rPackBtn.Bind(wx.wx.EVT_BUTTON, self.onInstOrdR)
-            self.sPackBtn.Bind(wx.wx.EVT_BUTTON, self.onInstOrdS)
+            self.rPackBtn.Bind(wx.EVT_BUTTON, self.onInstOrdR)
+            self.sPackBtn.Bind(wx.EVT_BUTTON, self.onInstOrdS)
             self.gList.gList.Bind(wx.EVT_LIST_COL_RIGHT_CLICK, self.DoColumnMenu)
             self.gNotebook.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.OnShowInfoPage)
             [x[0].Bind(wx.EVT_ENTER_WINDOW, self.hoverInCtrl) for x in self.infoPages]
