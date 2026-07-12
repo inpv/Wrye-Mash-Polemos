@@ -49,7 +49,7 @@ import string
 import sys
 import textwrap
 import time
-import wx
+import wx, wx.adv
 from wx.lib.mixins.listctrl import ListCtrlAutoWidthMixin
 
 
@@ -301,7 +301,7 @@ def spinCtrl(parent,value='',pos=defPos,size=defSize,style=wx.SP_ARROW_KEYS,
 
 def leftSash(parent,defaultSize=(100,100),onSashDrag=None):
     """Creates a left sash window."""
-    sash = wx.SashLayoutWindow(parent,style=wx.SW_3D)
+    sash = wx.adv.SashLayoutWindow(parent,style=wx.adv.SW_3D)
     sash.SetDefaultSize(defaultSize)
     sash.SetOrientation(wx.LAYOUT_VERTICAL)
     sash.SetAlignment(wx.LAYOUT_LEFT)
