@@ -303,24 +303,24 @@ def leftSash(parent,defaultSize=(100,100),onSashDrag=None):
     """Creates a left sash window."""
     sash = wx.adv.SashLayoutWindow(parent,style=wx.adv.SW_3D)
     sash.SetDefaultSize(defaultSize)
-    sash.SetOrientation(wx.LAYOUT_VERTICAL)
-    sash.SetAlignment(wx.LAYOUT_LEFT)
-    sash.SetSashVisible(wx.SASH_RIGHT, True)
+    sash.SetOrientation(wx.adv.LAYOUT_VERTICAL)
+    sash.SetAlignment(wx.adv.LAYOUT_LEFT)
+    sash.SetSashVisible(wx.adv.SASH_RIGHT, True)
     if onSashDrag:
         id = sash.GetId()
-        sash.Bind(wx.EVT_SASH_DRAGGED_RANGE, onSashDrag,id=id,id2=id)
+        sash.Bind(wx.adv.EVT_SASH_DRAGGED_RANGE, onSashDrag,id=id,id2=id)
     return sash
 
 def topSash(parent,defaultSize=(100,100),onSashDrag=None):
     """Creates a top sash window."""
-    sash = wx.SashLayoutWindow(parent,style=wx.SW_3D)
+    sash = wx.adv.SashLayoutWindow(parent,style=wx.adv.SW_3D)
     sash.SetDefaultSize(defaultSize)
-    sash.SetOrientation(wx.LAYOUT_HORIZONTAL)
-    sash.SetAlignment(wx.LAYOUT_TOP)
-    sash.SetSashVisible(wx.SASH_BOTTOM, True)
+    sash.SetOrientation(wx.adv.LAYOUT_HORIZONTAL)
+    sash.SetAlignment(wx.adv.LAYOUT_TOP)
+    sash.SetSashVisible(wx.adv.SASH_BOTTOM, True)
     if onSashDrag:
         id = sash.GetId()
-        sash.Bind(wx.EVT_SASH_DRAGGED_RANGE, onSashDrag,id=id,id2=id)
+        sash.Bind(wx.adv.EVT_SASH_DRAGGED_RANGE, onSashDrag,id=id,id2=id)
     return sash
 
 # Sizers ----------------------------------------------------------------------
