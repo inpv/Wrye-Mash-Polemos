@@ -46,6 +46,17 @@ RIG = wx.RIGHT
 CEN = wx.ALIGN_CENTRE
 
 
+def _find_case_insensitive(parent_dir, name):
+    """Return the actual on-disk name matching `name`, ignoring case."""
+    try:
+        for entry in os.listdir(parent_dir):
+            if entry.lower() == name.lower():
+                return entry
+    except OSError:
+        pass
+    return None
+
+
 class WizardDialog(wx.Dialog):
     """Wizard Class."""
     PanelID = 0
@@ -530,9 +541,11 @@ class WizardDialog(wx.Dialog):
         # Rules
         if folder == 'fldMw':  # Morrowind Path Check
             try:
-                if all([os.path.isfile(os.path.join(self.fldMw.GetValue(), 'Morrowind.ini')),
-                        os.path.isdir(os.path.join(self.fldMw.GetValue(), 'Data files'))]):
-                    return show([self.mw_Text, wx.BLUE, _(u'Success: morrowind.ini and "Data files" folder found.'), True])
+                mw_path = self.fldMw.GetValue()
+                data_files_entry = _find_case_insensitive(mw_path, 'Data Files')
+                ini_entry = _find_case_insensitive(mw_path, 'Morrowind.ini')
+                if ini_entry and data_files_entry:
+                    return show([self.mw_Text, wx.BLUE, _(u'Success: Morrowind.ini and "Data Files" folder found.'), True])
             except: pass
             return show([self.mw_Text, wx.RED, _(u'Are you sure this is Morrowind\'s directory? (Ignore if you are sure).'), False])
         if folder == 'fldOpenMWloc':  # OpenMW Path Check
