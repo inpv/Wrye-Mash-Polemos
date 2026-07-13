@@ -5158,7 +5158,7 @@ class MashApp(wx.App):  # Polemos: Added settings, file check, updates check, ml
         # Init saved configuration.
         InitSettings()  # conf.settings['...'] are known from here.
         # Set current (true) Wrye Mash dir.
-        singletons.MashDir = os.path.dirname(sys.argv[0])
+        singletons.MashDir = os.path.dirname(os.path.abspath(sys.argv[0]))
         # Credits and License
         self.appInfo()
         # Current Wrye Mash version:

@@ -62,7 +62,7 @@ from merrors import UncodedError as UncodedError, ConfError as ConfError
 
 
 # Constants
-MashDir = os.path.dirname(sys.argv[0])
+MashDir = os.path.dirname(os.path.abspath(sys.argv[0]))
 DETACHED_PROCESS = 0x00000008  # Polemos: No console window.
 
 if sys.platform == 'win32':
