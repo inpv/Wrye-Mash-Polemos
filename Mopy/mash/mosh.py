@@ -75,6 +75,8 @@ if sys.platform == 'win32':
 else:
     _POPEN_KWARGS = {}
 
+SEVENZIP = u'7z.exe' if sys.platform == 'win32' else u'7z'
+
 #--File Singletons
 mwIniFile = None    #--MWIniFile singleton
 modInfos  = None    #--ModInfos singleton
@@ -4599,7 +4601,7 @@ class ResetTempDir:  # Polemos
     def safe(self, tempdir):
         """Ensure Temp is Mash Temp."""
         if tempdir == os.path.abspath(os.sep): return False
-        if [x for x in scandir.listdir(tempdir) if x in ['7z.exe', 'mash.exe', 'mash.py']]: return False
+        if [x for x in scandir.listdir(tempdir) if x in [SEVENZIP, 'mash.exe', 'mash.py']]: return False
         return True
 
     def RecreateTempdir(self):
@@ -5064,7 +5066,7 @@ class InstallerArchive(Installer):
         fileSizeCrcs = self.fileSizeCrcs = []
         reList = re.compile(u'(Path|Folder|Size|CRC) = (.+)')
         file = size = crc = isdir = 0
-        command = ur'7z.exe l -slt -sccUTF-8 "%s"' % archive.s
+        command = SEVENZIP + ur' l -slt -sccUTF-8 "%s"' % archive.s
         args = ushlex.split(command)
         ins = Popen(args, bufsize=32768, stdout=PIPE, **_POPEN_KWARGS)
         memload = [x for x in ins.stdout]
@@ -5109,7 +5111,7 @@ class InstallerArchive(Installer):
         self.clearTemp()
         #--Extract files
         apath = dirs['installers'].join(archive)
-        command = ur'7z.exe x "%s" -bb -y -o"%s" @%s -scsUTF-8' % (apath.s, self.tempDir.s, self.tempList.s)
+        command = SEVENZIP + ur' x "%s" -bb -y -o"%s" @%s -scsUTF-8' % (apath.s, self.tempDir.s, self.tempList.s)
         args = ushlex.split(command)
         ins = Popen(args, stdout=PIPE, **_POPEN_KWARGS)
         reExtracting = re.compile('-\s+(.+)')

@@ -70,6 +70,7 @@ if sys.platform == 'win32':
 else:
     _POPEN_KWARGS = {}
 
+SEVENZIP = u'7z.exe' if sys.platform == 'win32' else u'7z'
 _gpaths = {}
 
 # LowStrings
@@ -315,7 +316,7 @@ class Path(object): # Polemos: Unicode fixes.
         """Calculates and returns crc value for self."""
         if conf.settings['advanced.7zipcrc32b'] and self.size > 16777216:
             #  7z is faster on big files
-            args = ushlex.split('7z.exe h "%s"' % self.s)
+            args = ushlex.split(SEVENZIP + u' h "%s"' % self.s)
             ins = Popen(args, bufsize=-1, stdout=PIPE, **_POPEN_KWARGS)
             return int([x for x in ins.stdout][14].split(':')[1], 16)
         crc = 0L
@@ -1113,13 +1114,13 @@ class ArchiveInfo:  # Polemos
 
     def parseArchiveFiles(self):
         """Get Package special files data."""
-        cmd = ur'7z.exe l -slt -sccUTF-8 "%s" *.esp *.esm *.bsa *.omwgame *.omwaddon *.ttf *.fnt -r' % self.package_path
+        cmd = SEVENZIP + ur' l -slt -sccUTF-8 "%s" *.esp *.esm *.bsa *.omwgame *.omwaddon *.ttf *.fnt -r' % self.package_path
         files_path = self.parser(cmd)
         self.mwfiles = self.dataFactory(files_path, tree=False)
 
     def parseArchiveStructure(self):
         """Get package structure data."""
-        cmd = ur'7z.exe l -slt -sccUTF-8 "%s" -r *\\ -xr!*\\*.*' % self.package_path
+        cmd = SEVENZIP + ur' l -slt -sccUTF-8 "%s" -r *\\ -xr!*\\*.*' % self.package_path
         package_folders = self.parser(cmd)
         self.package_paths = self.dataFactory(package_folders)
 
@@ -1163,13 +1164,13 @@ class MultiThreadGauge:  # Polemos
             title = _(u'Unpacking...')
             if data_files == '\\': data_files = ''
             else: data_files = '"%s*"' % data_files
-            cmd = ur'7z.exe -bb -bsp1 x "%s" %s -o"%s" -aoa -scsUTF-8' % (package_path, data_files, package_tempdir)
-            self.getmodlen(ur'7z.exe l "%s" %s' % (package_path, data_files))
+            cmd = SEVENZIP + ur' -bb -bsp1 x "%s" %s -o"%s" -aoa -scsUTF-8' % (package_path, data_files, package_tempdir)
+            self.getmodlen(SEVENZIP + ur' l "%s" %s' % (package_path, data_files))
         if mode == 'pack':
             pack_source, pack_target = packData
             if pack_target.endswith('.rar'): pack_target = '%s.7z' % pack_target[:-4]
             title = _(u'Packing...')
-            cmd = ur'7z.exe -bb -bsp1 a "%s" "%s\*"' % (pack_target, pack_source)
+            cmd = SEVENZIP + ur' -bb -bsp1 a "%s" "%s\*"' % (pack_target, pack_source)
             cmd = cmd.replace('\\','/')
         self.cmd = cmd
         import gui.dialog as gui
