@@ -64,6 +64,12 @@ from merrors import UncodedError as UncodedError, ConfError as ConfError
 # Constants
 MashDir = os.path.dirname(sys.argv[0])
 DETACHED_PROCESS = 0x00000008  # Polemos: No console window.
+
+if sys.platform == 'win32':
+    _POPEN_KWARGS = {'creationflags': DETACHED_PROCESS}
+else:
+    _POPEN_KWARGS = {}
+
 _gpaths = {}
 
 # LowStrings
@@ -310,7 +316,7 @@ class Path(object): # Polemos: Unicode fixes.
         if conf.settings['advanced.7zipcrc32b'] and self.size > 16777216:
             #  7z is faster on big files
             args = ushlex.split('7z.exe h "%s"' % self.s)
-            ins = Popen(args, bufsize=-1, stdout=PIPE, creationflags=DETACHED_PROCESS)
+            ins = Popen(args, bufsize=-1, stdout=PIPE, **_POPEN_KWARGS)
             return int([x for x in ins.stdout][14].split(':')[1], 16)
         crc = 0L
         with self.open('rb', 65536) as ins:
@@ -1089,7 +1095,7 @@ class ArchiveInfo:  # Polemos
     def archive(self, cmd):
         """Read Package contents."""
         args = ushlex.split(cmd)
-        ins = Popen(args, stdout=PIPE, creationflags=DETACHED_PROCESS)
+        ins = Popen(args, stdout=PIPE, **_POPEN_KWARGS)
         return ins.stdout
 
     def parser(self, cmd):
@@ -1174,7 +1180,7 @@ class MultiThreadGauge:  # Polemos
     def getmodlen(self, cmd):
         """Get quantity of files to be installed."""
         args = ushlex.split(cmd)
-        ins = Popen(args, stdout=PIPE, creationflags=DETACHED_PROCESS)
+        ins = Popen(args, stdout=PIPE, **_POPEN_KWARGS)
         for entry in ins.stdout: lendata = entry
         lendata = lendata.split()
         self.getInstallLen = int(lendata[4]) if len(lendata) >= 5 else 0
@@ -1182,7 +1188,7 @@ class MultiThreadGauge:  # Polemos
     def process(self, id):
         """Main process thread."""
         args = ushlex.split(self.cmd)
-        self.output = Popen(args, stdout=PIPE, creationflags=DETACHED_PROCESS)
+        self.output = Popen(args, stdout=PIPE, **_POPEN_KWARGS)
         while self.output.poll() is None:
             line = self.output.stdout.readline()
             if '%' in line: self.update(int(line[0:3]), '%s%%' % int(line[0:3]))

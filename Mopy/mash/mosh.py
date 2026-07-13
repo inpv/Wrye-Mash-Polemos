@@ -69,6 +69,12 @@ from merrors import MaxLoadedError as MaxLoadedError, SortKeyError as SortKeyErr
 # Singletons, Constants
 MashDir = os.path.dirname(sys.argv[0])  # Polemos
 DETACHED_PROCESS = 0x00000008  # Polemos
+
+if sys.platform == 'win32':
+    _POPEN_KWARGS = {'creationflags': DETACHED_PROCESS}
+else:
+    _POPEN_KWARGS = {}
+
 #--File Singletons
 mwIniFile = None    #--MWIniFile singleton
 modInfos  = None    #--ModInfos singleton
@@ -5060,7 +5066,7 @@ class InstallerArchive(Installer):
         file = size = crc = isdir = 0
         command = ur'7z.exe l -slt -sccUTF-8 "%s"' % archive.s
         args = ushlex.split(command)
-        ins = Popen(args, bufsize=32768, stdout=PIPE, creationflags=DETACHED_PROCESS)
+        ins = Popen(args, bufsize=32768, stdout=PIPE, **_POPEN_KWARGS)
         memload = [x for x in ins.stdout]
         for line in memload:
             maList = reList.match(line)
@@ -5105,7 +5111,7 @@ class InstallerArchive(Installer):
         apath = dirs['installers'].join(archive)
         command = ur'7z.exe x "%s" -bb -y -o"%s" @%s -scsUTF-8' % (apath.s, self.tempDir.s, self.tempList.s)
         args = ushlex.split(command)
-        ins = Popen(args, stdout=PIPE, creationflags=DETACHED_PROCESS)
+        ins = Popen(args, stdout=PIPE, **_POPEN_KWARGS)
         reExtracting = re.compile('-\s+(.+)')
         reAllOk = re.compile('Everything is Ok')
         extracted = []
