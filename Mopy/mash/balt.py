@@ -1215,7 +1215,7 @@ class Tank(wx.Panel):  # Polemos: Edits
 
     def OnSize(self, event):
         """Panel size was changed. Change gList size to match."""
-        size = self.GetClientSizeTuple()
+        size = self.GetClientSize()
         self.gList.SetSize(size)
 
     def OnScroll(self,event):
