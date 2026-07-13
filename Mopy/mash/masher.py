@@ -10521,7 +10521,10 @@ class App_mlox_po(Link):  # Polemos, new tool (mlox) in status bar.
         try:
             if os.path.isfile(conf.settings['mloxpath']):
                 os.chdir(os.path.dirname(conf.settings['mloxpath']))
-                os.spawnl(os.P_NOWAIT, conf.settings['mloxpath'], ' ')
+                if sys.platform == 'win32':
+                    os.spawnl(os.P_NOWAIT, conf.settings['mloxpath'], ' ')
+                else:
+                    Popen(['wine', conf.settings['mloxpath']])
                 gui.dialog.InfoMessage(None, _(u'Click OK when mlox is closed.'))
             else: raise OSError()
         except:
