@@ -1854,7 +1854,7 @@ class ModdataList(gui.List, gui.ListDragDropMixin):  # Polemos
         (hitItem,hitFlag) = self.list.HitTest(event.GetPosition())
         if hitItem < 0: return
         fileInfo = self.data[self.items[hitItem]]
-        os.startfile(fileInfo[6])
+        bolt.startfile(fileInfo[6])
 
     def OnChar(self,event):  #$# from FallenWizard
         if (event.GetKeyCode() == 127): self.DeleteSelected()
@@ -4585,7 +4585,7 @@ class MenuBar:  # Polemos
 
     # Settings ================== #
     def Mods_MorrowindIni(self, event): Mods_MorrowindIni.Execute(Mods_MorrowindIni(), event)
-    def plugins_OpenMWcfg(self, event): os.startfile(os.path.join(conf.settings['openmwprofile'], 'openmw.cfg'))
+    def plugins_OpenMWcfg(self, event): bolt.startfile(os.path.join(conf.settings['openmwprofile'], 'openmw.cfg'))
     def Mods_IniTweaks(self, event): Mods_IniTweaks.Execute(Mods_IniTweaks(), event)
     def Mods_Replacers(self, event): Mods_Replacers.Execute(Mods_Replacers(), event)
     def Reset_Beth_Dates(self, event): Reset_Beth_Dates.Execute(Reset_Beth_Dates(), event)
@@ -5512,7 +5512,7 @@ class Open_Datamods_po(Link): # Polemos
         """Handle selection."""
         dir = conf.settings['datamods']
         if not os.path.exists(dir): os.makedirs(dir)
-        os.startfile(dir)
+        bolt.startfile(dir)
 
 #------------------------------------------------------------------------------
 
@@ -5528,7 +5528,7 @@ class Open_Packages_po(Link): # Polemos
         """Handle selection."""
         dir = conf.settings['downloads']
         if not os.path.exists(dir): os.makedirs(dir)
-        os.startfile(dir)
+        bolt.startfile(dir)
 
 #------------------------------------------------------------------------------
 
@@ -7793,7 +7793,7 @@ class Open_Package(Link):  # Polemos
     def Execute(self,event):
         """Handle menu selection."""
         package = os.path.join(conf.settings['downloads'], self.data[0])
-        os.startfile(package)
+        bolt.startfile(package)
 
 #------------------------------------------------------------------------------
 
@@ -8291,7 +8291,7 @@ class Mods_MorrowindIni(Link):  # Polemos: made compatible with menubar.
 
     def Execute(self,event):
         """Handle selection."""
-        os.startfile(os.path.join(conf.settings['mwDir'], 'Morrowind.ini'))
+        bolt.startfile(os.path.join(conf.settings['mwDir'], 'Morrowind.ini'))
 
 #------------------------------------------------------------------------------
 
@@ -8329,7 +8329,7 @@ class Mods_OpenMWcfg(Link): # Polemos
     def Execute(self,event):
         """Handle selection."""
         path = os.path.join(conf.settings['openmwprofile'],'OpenMW.cfg')
-        os.startfile(path)
+        bolt.startfile(path)
 
 #------------------------------------------------------------------------------
 

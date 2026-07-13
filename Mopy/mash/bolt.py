@@ -71,6 +71,16 @@ else:
     _POPEN_KWARGS = {}
 
 SEVENZIP = u'7z.exe' if sys.platform == 'win32' else u'7z'
+
+def startfile(path):
+    """Cross-platform 'open with default application' for files or folders."""
+    if sys.platform == 'win32':
+        os.startfile(path)
+    elif sys.platform == 'darwin':
+        Popen(['open', path])
+    else:
+        Popen(['xdg-open', path])
+
 _gpaths = {}
 
 # LowStrings
@@ -403,7 +413,7 @@ class Path(object): # Polemos: Unicode fixes.
     #--start, move, copy, touch, untemp
     def start(self):  # Polemos fix
         """Starts file as if it had been double clicked in file explorer."""
-        try: os.startfile(self._s)
+        try: startfile(self._s)
         except: pass  # Todo: Add a msg to inform user
 
     def copyTo(self, destName):  # Polemos fix
