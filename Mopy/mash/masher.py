@@ -377,7 +377,7 @@ class SashTankPanel(gui.NotebookPanel):
 
     def OnSashDrag(self, event):
         """Handle sash moved."""
-        wMin, wMax = 80, self.GetSizeTuple()[0] - 80
+        wMin, wMax = 80, self.GetSize()[0] - 80
         sashPos = max(wMin, min(wMax, event.GetDragRect().width))
         self.left.SetDefaultSize((sashPos, 10))
         wx.adv.LayoutAlgorithm().LayoutWindow(self, self.right)
@@ -547,7 +547,7 @@ class ListEditorDialog(wx.Dialog):
     def OnCloseWindow(self, event): #--Window Closing
         """Handle window close event. Remember window size, position, etc."""
         sizes = conf.settings.getChanged('mash.window.sizes')
-        sizes[self.data.__class__] = self.GetSizeTuple()
+        sizes[self.data.__class__] = self.GetSize()
         self.Destroy()
 
 #------------------------------------------------------------------------------
@@ -3739,7 +3739,7 @@ class ScreensPanel(gui.NotebookPanel):
 
     def OnSashDrag(self,event):
         """Handle sash moved."""
-        wMin,wMax = 80,self.GetSizeTuple()[0]-80
+        wMin,wMax = 80,self.GetSize()[0]-80
         sashPos = max(wMin,min(wMax,event.GetDragRect().width))
         self.left.SetDefaultSize((sashPos,10))
         wx.adv.LayoutAlgorithm().LayoutWindow(self, self.right)
@@ -4023,7 +4023,7 @@ class MashFrame(wx.Frame):  # Polemos: Added a Menubar, OpenMW/TES3mp support, m
         if singletons.docBrowser: singletons.docBrowser.DoSave()
         if not self.IsIconized() and not self.IsMaximized():
             conf.settings['mash.framePos'] = self.GetPosition()
-            conf.settings['mash.frameSize'] = self.GetSizeTuple()
+            conf.settings['mash.frameSize'] = self.GetSize()
         conf.settings['mash.page'] = self.notebook.GetSelection()
         mosh.modInfos.table.save()
         for index in xrange(self.notebook.GetPageCount()): self.notebook.GetPage(index).OnCloseWindow()
@@ -5097,7 +5097,7 @@ class DocBrowser(wx.Frame):  # Polemos: Refactored
         conf.settings['mash.modDocs.show'] = False
         if not self.IsIconized() and not self.IsMaximized():
             conf.settings['mash.modDocs.pos'] = self.GetPosition()
-            conf.settings['mash.modDocs.size'] = self.GetSizeTuple()
+            conf.settings['mash.modDocs.size'] = self.GetSize()
         self.Destroy()
 
 #------------------------------------------------------------------------------
@@ -5143,7 +5143,7 @@ class JournalBrowser(wx.Frame):  # Polemos: Small OCD edits.
         conf.settings['mash.journal.show'] = False
         if not self.IsIconized() and not self.IsMaximized():
             conf.settings['mash.journal.pos'] = self.GetPosition()
-            conf.settings['mash.journal.size'] = self.GetSizeTuple()
+            conf.settings['mash.journal.size'] = self.GetSize()
         self.Destroy()
 
 #------------------------------------------------------------------------------

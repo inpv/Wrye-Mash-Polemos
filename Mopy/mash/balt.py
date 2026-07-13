@@ -489,8 +489,8 @@ def showLogClose(evt=None):
     """Handle log message closing."""
     window = evt.GetEventObject()
     if not window.IsIconized() and not window.IsMaximized():
-        _settings['balt.LogMessage.pos'] = window.GetPositionTuple()
-        _settings['balt.LogMessage.size'] = window.GetSizeTuple()
+        _settings['balt.LogMessage.pos'] = window.GetPosition()
+        _settings['balt.LogMessage.size'] = window.GetSize()
     window.Destroy()
 
 def showLog(parent,logText,title='',style=0,asDialog=True,fixedFont=False,icons=None):
@@ -583,8 +583,8 @@ def showWryeLog(parent,logText,title='',style=0,asDialog=True,icons=None):
     #--Show
     if asDialog:
         window.ShowModal()
-        _settings['balt.WryeLog.pos'] = window.GetPositionTuple()
-        _settings['balt.WryeLog.size'] = window.GetSizeTuple()
+        _settings['balt.WryeLog.pos'] = window.GetPosition()
+        _settings['balt.WryeLog.size'] = window.GetSize()
         window.Destroy()
     else: window.Show()
 
@@ -829,13 +829,13 @@ class ListEditor(wx.Dialog):
     def DoSave(self,event):
         """Handle save button."""
         self.data.save()
-        sizes[self.data.__class__.__name__] = self.GetSizeTuple()
+        sizes[self.data.__class__.__name__] = self.GetSize()
         self.EndModal(wx.ID_OK)
 
     def DoCancel(self,event):
         """Handle save button."""
         self.data.cancel()
-        sizes[self.data.__class__.__name__] = self.GetSizeTuple()
+        sizes[self.data.__class__.__name__] = self.GetSize()
         self.EndModal(wx.ID_CANCEL)
 
     #--Window Closing
@@ -843,7 +843,7 @@ class ListEditor(wx.Dialog):
         """Handle window close event.
         Remember window size, position, etc."""
         self.data.close()
-        sizes[self.data.__class__.__name__] = self.GetSizeTuple()
+        sizes[self.data.__class__.__name__] = self.GetSize()
         self.Destroy()
 
 #------------------------------------------------------------------------------
@@ -871,7 +871,7 @@ class Picture(wx.Window):
 
     def Rescale(self):
         """Updates scaled version of bitmap."""
-        picWidth,picHeight = self.oldSize = self.GetSizeTuple()
+        picWidth,picHeight = self.oldSize = self.GetSize()
         bitmap = self.scaled = self.bitmap
         if not bitmap: return
         imgWidth,imgHeight = bitmap.GetWidth(),bitmap.GetHeight()
@@ -886,9 +886,9 @@ class Picture(wx.Window):
         dc = wx.PaintDC(self)
         dc.SetBackground(wx.WHITE_BRUSH)
         if self.scaled:
-            if self.GetSizeTuple() != self.oldSize:
+            if self.GetSize() != self.oldSize:
                 self.Rescale()
-            panelWidth,panelHeight = self.GetSizeTuple()
+            panelWidth,panelHeight = self.GetSize()
             xPos = max(0,(panelWidth - self.scaled.GetWidth())/2)
             yPos = max(0,(panelHeight - self.scaled.GetHeight())/2)
             dc.Clear()

@@ -350,7 +350,7 @@ def LogMessage(parent, message, logText,title=u'', style=0, asDialog=True):
         window.ShowModal()
         #--Done
         conf.settings['mash.message.log.pos'] = window.GetPosition()
-        conf.settings['mash.message.log.size'] = window.GetSizeTuple()
+        conf.settings['mash.message.log.size'] = window.GetSize()
         window.Destroy()
     else: window.Show()
 
@@ -1602,7 +1602,7 @@ class HelpDialog(wx.Dialog):  # Polemos
         # Conditions
         if self.help.SelectionToText() == '': CopyItm.Enable(False)
         # Show menu todo: optimize by overriding base method
-        self.PopupMenu(context, [x/3 for x in self.help.GetSizeTuple()])
+        self.PopupMenu(context, [x/3 for x in self.help.GetSize()])
 
     def onHelp(self, event):
         """On hovering help panel."""
@@ -1665,7 +1665,7 @@ class HelpDialog(wx.Dialog):  # Polemos
         if not self.IsIconized() and not self.IsMaximized():
             conf.settings['mash.help.sash'] = self.main.GetSashPosition()
             conf.settings['mash.help.pos'] = self.GetPosition()
-            conf.settings['mash.help.size'] = self.GetSizeTuple()
+            conf.settings['mash.help.size'] = self.GetSize()
         self.Destroy()
 
 

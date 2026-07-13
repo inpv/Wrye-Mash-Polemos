@@ -102,7 +102,7 @@ class UtilsPanel(gui.NotebookPanel):  # Polemos: changes and fixes.
 
     def OnSashDrag(self,event):
         """Handle sash moved."""
-        wMin,wMax = 80,self.GetSizeTuple()[0]-80
+        wMin,wMax = 80,self.GetSize()[0]-80
         sashPos = max(wMin,min(wMax,event.GetDragRect().width))
         self.left.SetDefaultSize((sashPos,10))
         wx.adv.LayoutAlgorithm().LayoutWindow(self, self.right)
