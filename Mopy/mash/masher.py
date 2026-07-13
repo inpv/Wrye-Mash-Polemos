@@ -2011,7 +2011,7 @@ class ModDetails(wx.Window): # Polemos: fixed bugs, refactored, optimised, addon
             self.psBtn.SetToolTip(wx.ToolTip(_(u'Paste Mod Datetime')))
             # Description
             self.description = wx.TextCtrl(self,wx.NewId(), u'',size=(self.maxSash,130),style=wx.TE_MULTILINE|wx.TE_READONLY)
-            self.description.SetMaxLength(256)
+            # self.description.SetMaxLength(256) # SetMaxLength is invalid on multiline controls, was always a no-op
             # Masters
             singletons.modsMastersList = self.masters = MasterList(self, None)
             # Master Menu Button
