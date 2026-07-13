@@ -38,7 +38,7 @@
 # ========================================================================================
 
 
-import wx, os
+import wx, os, wx.adv
 from .. import singletons
 import scandir, json, io  # Polemos
 from ..mosh import dirs, GPath
@@ -282,8 +282,8 @@ class SettingsTabs:
                                          style=wx.TE_READONLY|wx.VSCROLL|wx.HSCROLL|wx.NO_BORDER|wx.WANTS_CHARS)
         self.contents.SetFocus()
         # URL
-        self.home_url = wx.HyperlinkCtrl(self.about_panel,wx.ID_ANY,self.website_po[0],
-                                         self.website_po[1],dPos,dSize,wx.HL_CONTEXTMENU|wx.HL_DEFAULT_STYLE)
+        self.home_url = wx.adv.HyperlinkCtrl(self.about_panel,wx.ID_ANY,self.website_po[0],
+                                         self.website_po[1],dPos,dSize,wx.adv.HL_CONTEXTMENU|wx.adv.HL_DEFAULT_STYLE)
         # Layout
         AboutImage_Sizer, About_Sizer = SizerMany(2, wx.VERTICAL)
         AboutImageBtn_Sizer, AboutMain_Sizer, AboutURL_Sizer = SizerMany(3, wx.HORIZONTAL)
