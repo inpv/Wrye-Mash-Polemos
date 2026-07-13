@@ -33,6 +33,7 @@
 from lxml import html
 from lxml import _elementpath as _dummy  #  Polemos: Needed for py2exe to work.
 import requests
+import traceback
 import gui.dialog
 import os, wx
 
@@ -55,28 +56,53 @@ def wrye_download_site(url, mode):
 
 
 class WryeWeb:
-    """Wrye Mash version checker for Nexus."""
+    """Wrye Mash version checker."""
 
     def __init__(self, mode):
         """Init."""
         self.openmw = mode
+        self.github_api = "https://api.github.com/repos/inpv/Wrye-Mash-Polemos/releases/latest"
         self.mash_net = wrye_download_site('home', self.openmw)
 
     def get_mash_ver(self):
-        """Parse Nexus page."""
+        """Parse GitHub releases page."""
         progress = gui.dialog.netProgressDialog()
         try:
             progress.update(4)
-            page = requests.get(self.mash_net)
-            tree = html.fromstring(page.content)
-            get_ver = tree.xpath('//*[@id="pagetitle"]/ul[2]/li[5]/div/div[2]')
-            self.mash_net_ver = int(('%s' % (get_ver[0].text.strip().replace('v', ''))))
+
+            headers = {
+                'User-Agent': 'Wrye-Mash-Polemos-Updater',
+                'Accept': 'application/vnd.github.v3+json'
+            }
+
+            response = requests.get(
+                self.github_api,
+                headers=headers,
+                timeout=12
+            )
+
+            print("GitHub Status:", response.status_code)
+            response.raise_for_status()
+
+            data = response.json()
+            tag = data.get('tag_name', 'v0')
+            self.mash_net_ver = int(tag.lstrip('vV'))
+
+            print("Latest GitHub version:", self.mash_net_ver)
+
             progress.update()
-            result = self.mash_net_ver
-        except: result = 'error'
+            return self.mash_net_ver
+
+        except requests.exceptions.RequestException as e:
+            print("Update check failed (network):")
+            traceback.print_exc()
+            return 'error'
+        except (ValueError, TypeError, KeyError, IndexError) as e:
+            print("Update check failed (parsing JSON):")
+            traceback.print_exc()
+            return 'error'
         finally:
             progress.Destroy()
-            return result
 
 
 class VisitWeb:
