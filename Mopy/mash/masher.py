@@ -1037,7 +1037,7 @@ class MasterList(gui.List):
 
     def OnLabelEdited(self,event):
         """Label Edited"""
-        itemDex = event.m_itemIndex
+        itemDex = event.GetIndex()
         newName = event.GetText()
         #--No change?
         if newName in mosh.modInfos:
@@ -1603,7 +1603,7 @@ class ModList(gui.List, gui.ListDragDropMixin):  # Polemos: OpenMW/TES3mp suppor
             self.timer = wx.Timer(self)
             self.Bind(wx.EVT_TIMER, self.timeSelChk, self.timer)
             self.timer.Start(50)
-        self.timeChk = self.items[event.m_itemIndex]
+        self.timeChk = self.items[event.GetIndex()]
 
     def OnKeyDown(self, event):  # Polemos: added delete item on DEL
         fmap = {
@@ -1878,7 +1878,7 @@ class ModdataList(gui.List, gui.ListDragDropMixin):  # Polemos
 
     def OnItemSelected(self,event):
         """Do stuff when selecting a mod."""
-        modName = self.items[event.m_itemIndex]
+        modName = self.items[event.GetIndex()]
 
     def OnKeyDown(self, event):
         fmap = {
@@ -2594,7 +2594,7 @@ class SaveList(gui.List):  # Polemos: OpenMW support, additions, more...
             self.timer = wx.Timer(self)
             self.Bind(wx.EVT_TIMER, self.timeSelChk, self.timer)
             self.timer.Start(50)
-        self.timeChk = self.items[event.m_itemIndex]
+        self.timeChk = self.items[event.GetIndex()]
 
     def OnKeyDown(self, event):  # Polemos: added delete item on DEL
         fmap = {
@@ -3705,7 +3705,7 @@ class ScreensList(gui.List):  # Polemos: Fixes and more
         conf.settings.setChanged('mash.screens.colWidths')
 
     def OnItemSelected(self,event=None):
-        fileName = self.items[event.m_itemIndex]
+        fileName = self.items[event.GetIndex()]
         filePath = mosh.screensData.dir.join(fileName)
         bitmap = (filePath.exists() and wx.Bitmap(filePath.s)) or None
         self.picture.SetBitmap(bitmap)

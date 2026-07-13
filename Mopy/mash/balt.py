@@ -1207,7 +1207,7 @@ class Tank(wx.Panel):  # Polemos: Edits
 
     def OnItemSelected(self,event):  # Polemos: a small hook for the main menu.
         """Item Selected: Refresh details."""
-        self.RefreshDetails(self.GetItem(event.m_itemIndex))
+        self.RefreshDetails(self.GetItem(event.GetIndex()))
 
     def OnStartLabelEdit(self, event):
         """ We don't support renaming labels, so don't let anyone start """
